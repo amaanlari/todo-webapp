@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../App.css'
+import { useAuth } from '../security/AuthContext';
 
 function LoginComponent() {
     const [username, setUsername] = useState('')
@@ -8,6 +9,7 @@ function LoginComponent() {
     const [userIsAuthenticated, setUserIsAuthenticated] = useState(false)
     const [userIsNotAuthenticated, setUserIsNotAuthenticated] = useState(false)
     const navigate = useNavigate()
+    const authContext = useAuth()
 
     function usernameOnChangeHandler(event) {
         setUsername(event.target.value);
@@ -19,12 +21,14 @@ function LoginComponent() {
 
     function handleSubmit(event) {
         if (username == 'testuser' && password == 'test123') {
+            authContext.setUserIsAuthenticated(true)
             setUserIsAuthenticated(true);
             setUserIsNotAuthenticated(false);
             navigate(`/welcome/${username}`)
         }
         else {
             console.log("Error");
+            authContext.setUserIsAuthenticated(false)
             setUserIsAuthenticated(false);
             setUserIsNotAuthenticated(true);
             console.log(userIsAuthenticated);

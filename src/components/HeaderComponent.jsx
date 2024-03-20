@@ -4,7 +4,7 @@ import { useAuth } from '../security/AuthContext';
 
 function HeaderComponent() {
     const authContext = useAuth()
-    console.log(`HeaderComponent- number=${authContext.number}`)
+    console.log(authContext)
 
     return (
         <header className='border-bottom border-dark border-5 mb-5 p-2 bg-dark'>
