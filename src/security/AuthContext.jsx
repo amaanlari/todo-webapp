@@ -5,14 +5,27 @@ export const AuthContext = createContext()
 export const useAuth = () => useContext(AuthContext) // <<<<<<<<< Custom hook
 
 export default function AuthProvider({ children }) {
-    const [number, setNumber] = useState(0)
 
     const [userIsAuthenticated, setUserIsAuthenticated] = useState(false)
 
-    // setInterval(() => setNumber(number+1), 10000)
-    // const valueToBeShared = {number, userIsAuthenticated, setUserIsAuthenticated}
+    function login(username, password) {
+        if (username == 'testuser' && password == 'test123') {
+            setUserIsAuthenticated(true)
+            return true
+        }
+        else {
+            setUserIsAuthenticated(false)
+            return false
+        }
+    }
+
+    function logout() {
+        setUserIsAuthenticated(false)
+        return false
+    }
+
     return (
-        <AuthContext.Provider value={ {number, userIsAuthenticated, setUserIsAuthenticated} }>
+        <AuthContext.Provider value={ {userIsAuthenticated, login, logout} }>
             {children}
         </AuthContext.Provider>
     )

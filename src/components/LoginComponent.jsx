@@ -6,7 +6,6 @@ import { useAuth } from '../security/AuthContext';
 function LoginComponent() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [userIsAuthenticated, setUserIsAuthenticated] = useState(false)
     const [userIsNotAuthenticated, setUserIsNotAuthenticated] = useState(false)
     const navigate = useNavigate()
     const authContext = useAuth()
@@ -20,18 +19,11 @@ function LoginComponent() {
     }
 
     function handleSubmit(event) {
-        if (username == 'testuser' && password == 'test123') {
-            authContext.setUserIsAuthenticated(true)
-            setUserIsAuthenticated(true);
-            setUserIsNotAuthenticated(false);
+        if (authContext.login(username, password)) {
             navigate(`/welcome/${username}`)
         }
         else {
-            console.log("Error");
-            authContext.setUserIsAuthenticated(false)
-            setUserIsAuthenticated(false);
-            setUserIsNotAuthenticated(true);
-            console.log(userIsAuthenticated);
+            setUserIsNotAuthenticated(true)
         }
     }
 
@@ -56,7 +48,6 @@ function LoginComponent() {
                     </div>
                 </form>
             </div>
-            {userIsAuthenticated && <div className='success-message'>Authenticaton Successful!!</div>}
             {userIsNotAuthenticated && <div className='error-message'>Invalid Credentials!!</div>}
         </div >
     )

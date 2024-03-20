@@ -7,7 +7,7 @@ function HeaderComponent() {
     const userIsAuthenticated = authContext.userIsAuthenticated
     
     function logout() {
-        authContext.setUserIsAuthenticated(false)
+        authContext.logout()
     }
 
     return (
@@ -28,7 +28,7 @@ function HeaderComponent() {
                         </div>
                         <ul className='navbar-nav'>
                             <li className='nav-item'>
-                                {userIsAuthenticated && <Link className='nav-link' to='/logout' onClick={() => logout}>Logout</Link>}
+                                {userIsAuthenticated && <Link className='nav-link' to='/logout' onClick={logout}>Logout</Link>}
                             </li>
                             <li className='nav-item'>
                                 {!userIsAuthenticated && <Link className='nav-link' to='/login'>Login</Link>}
