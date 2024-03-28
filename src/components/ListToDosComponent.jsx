@@ -1,23 +1,20 @@
+import { useEffect, useState } from 'react';
 import '../App.css';
+import { retrieveTodos } from '../api/TodoApiService';
 
 function ListToDosComponent() {
-  const today = new Date();
-  const targetDate = new Date(
-    today.getFullYear() + 12,
-    today.getMonth(),
-    today.getDay(),
-  );
-  const todos = [
-    { id: 1, description: 'Learn AWS', done: false, targetDate: targetDate },
-    { id: 2, description: 'Learn Docker', done: false, targetDate: targetDate },
-    {
-      id: 3,
-      description: 'Learn SpringBoot',
-      done: false,
-      targetDate: targetDate,
-    },
-    { id: 4, description: 'Learn React', done: false, targetDate: targetDate },
-  ];
+  const [todos, setTodos] = useState([]);
+
+  function refreshTodos() {
+    retrieveTodos('in28minutes')
+      .then(response => {
+        setTodos(response.data);
+      })
+      .catch(error => console.error(error));
+  }
+
+  useEffect(() => refreshTodos(), []);
+
   return (
     <div className="container">
       <h1>To Do List!!</h1>
@@ -36,7 +33,7 @@ function ListToDosComponent() {
               <td>{todo.id}</td>
               <td>{todo.description}</td>
               <td>{todo.done.toString()}</td>
-              <td>{todo.targetDate.toDateString()}</td>
+              <td>{todo.targetDate.toString()}</td>
             </tr>
           ))}
         </tbody>
