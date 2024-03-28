@@ -56,7 +56,7 @@ function LoginComponent() {
               onChange={passwordOnChangeHandler}
             />
           </div>
-          <div className="text-center">
+          <div className="text-center">user
             <button
               className="mt-3 btn btn-dark w-100"
               type="button"

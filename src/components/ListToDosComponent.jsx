@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import '../App.css';
 import { deleteTodoApi, retrieveTodosApi } from '../api/TodoApiService';
+import { useAuth } from '../security/AuthContext';
 
 function ListToDosComponent() {
+  const authContext = useAuth();
+  const username = authContext.username;
   const [todos, setTodos] = useState([]);
   const [message, setMessage] = useState(null);
 
   function refreshTodos() {
-    retrieveTodosApi('in28minutes')
+    retrieveTodosApi(username)
       .then(response => {
         setTodos(response.data);
       })
@@ -15,8 +18,7 @@ function ListToDosComponent() {
   }
 
   function deleteTodo(id) {
-    console.log(`Delete clicked ${id}`);
-    deleteTodoApi('in28minutes', id).then(() => {
+    deleteTodoApi(username, id).then(() => {
       setMessage(`Successfully Deleted the task with id ${id}`);
       refreshTodos();
     });
@@ -37,7 +39,13 @@ function ListToDosComponent() {
           </tr>
         </thead>
         <tbody>
-        {message && <tr><td colSpan={8} className='alert alert-warning bg-warning-subtle' >{message}</td></tr>}
+          {message && (
+            <tr>
+              <td colSpan={8} className="alert alert-warning bg-warning-subtle">
+                {message}
+              </td>
+            </tr>
+          )}
           {todos.map(todo => (
             <tr key={todo.id}>
               <td>{todo.description}</td>
