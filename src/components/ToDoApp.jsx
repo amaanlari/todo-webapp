@@ -8,6 +8,7 @@ import ListToDosComponent from './ListToDosComponent';
 import LoginComponent from './LoginComponent';
 import WelcomeComponent from './WelcomeComponent';
 import LogoutComponent from './LogoutComponent';
+import TodoComponent from './TodoComponent';
 
 function AuthenticatedRoute({ children }) {
   const authContext = useAuth();
@@ -17,7 +18,7 @@ function AuthenticatedRoute({ children }) {
 
 export default function ToDoApp() {
   return (
-    <div className="ToDoApp">
+    <div className="ToDoApp min-vh-100 d-flex flex-column">
       <AuthProvider>
         <BrowserRouter>
           <HeaderComponent />
@@ -33,7 +34,7 @@ export default function ToDoApp() {
               }
             />
             <Route
-              path="/todo"
+              path="/todos"
               element={
                 <AuthenticatedRoute>
                   <ListToDosComponent />
@@ -49,8 +50,16 @@ export default function ToDoApp() {
               }
             />
             <Route path="*" element={<ErrorComponent />} />
+            <Route
+              path="/todo/:id"
+              element={
+                <AuthenticatedRoute>
+                  <TodoComponent />
+                </AuthenticatedRoute>
+              }
+            />
           </Routes>
-          {/* <FooterComponent /> */}
+          <FooterComponent />
         </BrowserRouter>
       </AuthProvider>
     </div>

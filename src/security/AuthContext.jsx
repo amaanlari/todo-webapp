@@ -23,6 +23,7 @@ export default function AuthProvider({ children }) {
 
   function logout() {
     setUserIsAuthenticated(false);
+    setUsername(null);
     return false;
   }
 

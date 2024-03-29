@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 import '../App.css';
 import { deleteTodoApi, retrieveTodosApi } from '../api/TodoApiService';
 import { useAuth } from '../security/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 function ListToDosComponent() {
   const authContext = useAuth();
   const username = authContext.username;
   const [todos, setTodos] = useState([]);
   const [message, setMessage] = useState(null);
+  const navigate = useNavigate();
 
   function refreshTodos() {
     retrieveTodosApi(username)
@@ -24,18 +26,22 @@ function ListToDosComponent() {
     });
   }
 
+  function handleUpdate(id) {
+    navigate(`/todo/${id}`);
+  }
   useEffect(() => refreshTodos(), []);
 
   return (
     <div className="container">
       <h1>To Do List!!</h1>
-      <table className="table">
+      <table className="table table-hover table-striped-columns">
         <thead>
           <tr>
             <th>Description</th>
             <th>Status</th>
             <th>Target Date</th>
             <th>Delete</th>
+            <th>Update</th>
           </tr>
         </thead>
         <tbody>
@@ -57,6 +63,14 @@ function ListToDosComponent() {
                   onClick={() => deleteTodo(todo.id)}
                 >
                   Delete
+                </button>
+              </td>
+              <td>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => handleUpdate(todo.id)}
+                >
+                  Update
                 </button>
               </td>
             </tr>

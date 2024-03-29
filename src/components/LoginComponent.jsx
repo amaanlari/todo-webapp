@@ -29,9 +29,9 @@ function LoginComponent() {
   return (
     <div className="LoginComponent">
       <h1>To Do Management</h1>
-      <div className="LoginForm">
+      <div className="border border-2 border-dark rounded-5 w-50 h-auto mx-auto my-3 p-3">
         <form>
-          <div className="form-title">Login to To Do</div>
+          <div className="fw-bolder fs-4 text-center">Login to To Do</div>
           <div className="mb-3">
             <label htmlFor="username" className="form-label">
               Username
@@ -56,7 +56,7 @@ function LoginComponent() {
               onChange={passwordOnChangeHandler}
             />
           </div>
-          <div className="text-center">user
+          <div className="text-center">
             <button
               className="mt-3 btn btn-dark w-100"
               type="button"
