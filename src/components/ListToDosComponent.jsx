@@ -34,7 +34,7 @@ function ListToDosComponent() {
   return (
     <div className="container">
       <h1>To Do List!!</h1>
-      <table className="table table-hover table-striped-columns">
+      <table className="table table-hover">
         <thead>
           <tr>
             <th>Description</th>
