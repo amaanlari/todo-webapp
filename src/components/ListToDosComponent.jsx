@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import '../App.css';
-import { deleteTodoApi, retrieveTodosApi } from '../api/TodoApiService';
+import { deleteTodoApi, readTodosApi } from '../api/TodoApiService';
 import { useAuth } from '../security/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ function ListToDosComponent() {
   const navigate = useNavigate();
 
   function refreshTodos() {
-    retrieveTodosApi(username)
+    readTodosApi(username)
       .then(response => {
         setTodos(response.data);
       })
@@ -59,7 +59,7 @@ function ListToDosComponent() {
               <td>{todo.targetDate.toString()}</td>
               <td>
                 <button
-                  className="btn btn-warning"
+                  className="btn btn-danger"
                   onClick={() => deleteTodo(todo.id)}
                 >
                   Delete
@@ -70,13 +70,21 @@ function ListToDosComponent() {
                   className="btn btn-primary"
                   onClick={() => handleUpdate(todo.id)}
                 >
-                  Update
+                  Edit
                 </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <div className="text-center m-5">
+        <button
+          className="btn btn-success"
+          onClick={() => navigate('/todo/-1')}
+        >
+          Add
+        </button>
+      </div>
     </div>
   );
 }

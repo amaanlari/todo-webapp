@@ -1,5 +1,9 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { retrieveTodoApi, updateTodoApi } from '../api/TodoApiService';
+import {
+  createTodoApi,
+  readTodoApi,
+  updateTodoApi,
+} from '../api/TodoApiService';
 import { useAuth } from '../security/AuthContext';
 import { useEffect, useState } from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
@@ -15,16 +19,20 @@ function TodoComponent() {
   useEffect(() => retrieveTodo(), [id]);
 
   function retrieveTodo() {
-    retrieveTodoApi(username, id)
-      .then(response => {
-        setDescription(response.data.description);
-        setTargetDate(response.data.targetDate);
-      })
-      .catch(error => console.log(error));
+    if (id != -1) {
+      readTodoApi(username, id)
+        .then(response => {
+          setDescription(response.data.description);
+          setTargetDate(response.data.targetDate);
+        })
+        .catch(error => console.log(error));
+    } else {
+      setDescription('');
+      setTargetDate('');
+    }
   }
 
   function onSubmit(values) {
-    console.log(values);
     const todo = {
       id: id,
       username: username,
@@ -32,15 +40,27 @@ function TodoComponent() {
       targetDate: values.targetDate,
       isDone: false,
     };
-    console.log(todo);
-    updateTodoApi(todo)
-      .then(response => {
-        navigate('/todos');
-      })
-      .catch(error => {
-        console.log(error);
-        alert('An error occurred while updating the todo');
-      });
+    if (id !== -1) {
+      updateTodoApi(todo)
+        .then(response => {
+          navigate('/todos');
+        })
+        .catch(error => {
+          console.log(error);
+          alert('An error occurred while updating the todo');
+        });
+    } else {
+      createTodoApi(todo)
+        .then(response => {
+          setDescription('');
+          setTargetDate('');
+          navigate('/todos');
+        })
+        .catch(error => {
+          console.log(error);
+          alert('An error occurred while adding the todo');
+        });
+    }
   }
 
   function validate(values) {
@@ -54,7 +74,7 @@ function TodoComponent() {
     if (values.targetDate == '') {
       errors.targetDate = 'Enter a target date';
     }
-    console.log(`tdate  ${targetDate} and ${description}`);
+    console.log(`{\n  targetDate:  ${targetDate} \n  description: ${description}\n}`);
     return errors;
   }
 
