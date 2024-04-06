@@ -21,3 +21,8 @@ export const updateTodoApi = todo =>
 
 export const createTodoApi = todo =>
   apiClient.post(`/users/${todo.username}/todos}`, todo);
+
+export const executeBasicAuthenticationService = basicAuthenticationToken =>
+  apiClient.get('/basicauth', {
+    headers: { Authorization: basicAuthenticationToken },
+  });

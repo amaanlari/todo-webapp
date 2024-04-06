@@ -18,11 +18,16 @@ function LoginComponent() {
     setPassword(event.target.value);
   }
 
-  function handleSubmit(event) {
-    if (authContext.login(username, password)) {
-      navigate(`/welcome/${username}`);
-    } else {
+  async function handleSubmit(event) {
+    try {
+      if (await authContext.login(username, password)) {
+        navigate(`/welcome/${username}`);
+      } else {
+        setUserIsNotAuthenticated(true);
+      }
+    } catch (error) {
       setUserIsNotAuthenticated(true);
+      console.log(userIsNotAuthenticated);
     }
   }
 
@@ -68,9 +73,11 @@ function LoginComponent() {
           </div>
         </form>
       </div>
-      {userIsNotAuthenticated && (
-        <div className="error-message">Invalid Credentials!!</div>
-      )}
+      <div className="container-fluid w-50 text-center">
+        {userIsNotAuthenticated && (
+          <div className="alert text-bg-danger">Invalid Credentials!!</div>
+        )}
+      </div>
     </div>
   );
 }

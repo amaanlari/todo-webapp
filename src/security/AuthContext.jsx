@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from 'react';
+import { executeBasicAuthenticationService } from '../api/TodoApiService';
 
 export const AuthContext = createContext();
 
@@ -9,14 +10,28 @@ export default function AuthProvider({ children }) {
 
   const [username, setUsername] = useState(null);
 
-  function login(username, password) {
-    if (username == 'in28minutes' && password == 'test123') {
-      setUserIsAuthenticated(true);
-      setUsername(username);
-      return true;
-    } else {
-      setUserIsAuthenticated(false);
-      setUsername(null);
+  const [token, setToken] = useState(null);
+
+  async function login(username, password) {
+    const basicAuthenticationToken =
+      'Basic ' + window.btoa(username + ':' + password);
+
+    const response = await executeBasicAuthenticationService(
+      basicAuthenticationToken,
+    );
+
+    try {
+      if (response.status == 200) {
+        setUserIsAuthenticated(true);
+        setUsername(username);
+        setToken(basicAuthenticationToken);
+        return true;
+      } else {
+        logout();
+        return false;
+      }
+    } catch (error) {
+      logout();
       return false;
     }
   }
@@ -24,6 +39,7 @@ export default function AuthProvider({ children }) {
   function logout() {
     setUserIsAuthenticated(false);
     setUsername(null);
+    setToken(null);
     return false;
   }
 
