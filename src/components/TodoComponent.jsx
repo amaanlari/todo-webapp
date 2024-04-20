@@ -40,7 +40,7 @@ function TodoComponent() {
       targetDate: values.targetDate,
       isDone: false,
     };
-    if (id !== -1) {
+    if (id != -1) {
       updateTodoApi(todo)
         .then(response => {
           navigate('/todos');

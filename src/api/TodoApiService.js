@@ -10,10 +10,7 @@ export const readTodoApi = (username, todoId) =>
   apiClient.get(`/users/${username}/todos/${todoId}`);
 
 export const updateTodoApi = todo =>
-  apiClient.put(`/users/${todo.username}/todos/${todo.id}}`, todo);
+  apiClient.put(`/users/${todo.username}/todos/${todo.id}`, todo);
 
 export const createTodoApi = todo =>
-  apiClient.post(`/users/${todo.username}/todos}`, todo);
-
-export const executeBasicAuthenticationService = basicAuthenticationToken =>
-  apiClient.get('/basicauth');
+  apiClient.post(`/users/${todo.username}/todos`, todo);
