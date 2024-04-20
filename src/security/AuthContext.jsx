@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 import { executeBasicAuthenticationService } from '../api/TodoApiService';
+import { apiClient } from '../api/ApiClient';
 
 export const AuthContext = createContext();
 
@@ -25,6 +26,10 @@ export default function AuthProvider({ children }) {
         setUserIsAuthenticated(true);
         setUsername(username);
         setToken(basicAuthenticationToken);
+        apiClient.interceptors.request.use(config => {
+          config.headers.Authorization = basicAuthenticationToken;
+          return config;
+        });
         return true;
       } else {
         logout();
@@ -45,7 +50,7 @@ export default function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ userIsAuthenticated, login, logout, username }}
+      value={{ userIsAuthenticated, login, logout, username, token }}
     >
       {children}
     </AuthContext.Provider>

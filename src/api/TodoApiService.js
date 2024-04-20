@@ -1,11 +1,4 @@
-import axios from 'axios';
-
-const apiClient = axios.create({
-  baseURL: 'http://localhost:8080',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+import { apiClient } from './ApiClient';
 
 export const readTodosApi = username =>
   apiClient.get(`/users/${username}/todos`);
@@ -23,6 +16,4 @@ export const createTodoApi = todo =>
   apiClient.post(`/users/${todo.username}/todos}`, todo);
 
 export const executeBasicAuthenticationService = basicAuthenticationToken =>
-  apiClient.get('/basicauth', {
-    headers: { Authorization: basicAuthenticationToken },
-  });
+  apiClient.get('/basicauth');
