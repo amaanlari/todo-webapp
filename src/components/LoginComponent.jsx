@@ -78,6 +78,13 @@ function LoginComponent() {
           <div className="alert text-bg-danger">Invalid Credentials!!</div>
         )}
       </div>
+      <div className="container-fluid w-50">
+      <h5>To get started, you can use the following dummy credentials:</h5>
+        <ul>
+          <li>Username: dummy</li>
+          <li>Password: dummy</li>
+        </ul>
+      </div>
     </div>
   );
 }
