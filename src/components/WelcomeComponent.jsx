@@ -11,20 +11,7 @@ function WelcomeComponent() {
 
   function callHelloWorldRestApi() {
     console.log('called');
-    console.log(authContext.token);
-    /*
-    retrieveHelloWorldBean()
-      .then((response) => successfulResponse(response))
-      .catch((error) => errorResponse(error))
-      .finally(() => console.log('clean up'));
-    */
-
-    /*
-    retrieveHelloWorldBean()
-      .then((response) => successfulResponse(response))
-      .catch((error) => errorResponse(error))
-      .finally(() => console.log('clean up'));
-    */
+    console.log('username: ', username);
 
     retrieveHelloWorldBeanPathVariable(username)
       .then(response => successfulResponse(response))
@@ -60,6 +47,9 @@ function WelcomeComponent() {
           >
             Click for greeting.
           </button>
+        </div>
+        <div className="text-info">
+          <h4>{message}</h4>
         </div>
       </div>
       <div className='readme-container'>
