@@ -4,6 +4,7 @@ import { useAuth } from '../security/AuthContext';
 
 function HeaderComponent() {
   const authContext = useAuth();
+  const username = authContext.username;
   const userIsAuthenticated = authContext.userIsAuthenticated;
 
   function logout() {
@@ -17,15 +18,15 @@ function HeaderComponent() {
           <nav className="navbar navbar-dark navbar-expand-lg bg-dark">
             <a
               className="navbar-brand ms-2 fs-2 fw-bold text-white"
-              href="in28minutes.com"
+              href="/"
             >
-              in28minutes
+              Todo
             </a>
             <div className="collapse navbar-collapse">
               <ul className="navbar-nav">
                 <li className="nav-item">
                   {userIsAuthenticated && (
-                    <Link className="nav-link" to="/welcome/amaanlari">
+                    <Link className="nav-link" to={`/welcome/${username}`}>
                       Home
                     </Link>
                   )}
